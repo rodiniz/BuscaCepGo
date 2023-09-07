@@ -1,0 +1,31 @@
+
+<div class="container mx-auto">
+    <h3 class="mt-3"> 
+       Busca CEP
+        <span class="htmx-indicator"> 
+          <img height="20" src="/img/R.png"/> Buscando... 
+         </span> 
+      </h3>
+      <div class="mb-3">
+        <label for="txtLogradouro" class="form-label">Logradouro</label>
+        <input class="form-control" type="search" 
+            id="txtLogradouro"
+            class="rounded mx-auto w-lg p-4"
+              name="name" placeholder="digite o nome do logradouro" 
+              hx-post="/location" 
+              hx-trigger="keyup changed delay:1000ms, search" 
+              hx-target="#search-results" 
+              hx-indicator=".htmx-indicator">
+      </div>
+      <table class="table table-bordered table-striped mt-5">
+          <thead>
+          <tr>
+            <th >UF</th>
+            <th >Logradouro</th>
+            <th >CEP</th>
+          </tr>
+          </thead>
+          <tbody id="search-results">
+          </tbody>
+      </table>
+</div>

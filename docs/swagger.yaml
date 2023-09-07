@@ -1,0 +1,52 @@
+info:
+  contact: {}
+paths:
+  /location:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Get all locations
+      parameters:
+      - description: Name
+        in: formData
+        name: name
+        required: true
+        type: string
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Get all locations containing the name typed
+  /location/paged:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Get all locations
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: page_size
+        in: query
+        name: page_size
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Get all locations containing the name typed
+swagger: "2.0"
