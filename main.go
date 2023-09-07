@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	"example.com/m/database"
@@ -37,7 +38,13 @@ func main() {
 	//LoadData()
 
 	app.Use(cors.New())
-	app.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+
+	app.Listen(":" + port)
 }
 
 func LoadData() error {
