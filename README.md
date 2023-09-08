@@ -5,3 +5,8 @@ This is an experiment to create something usable with tecnologies I never used b
 This project has an api and one page.
 Using the page you can search for a brazilian zip code using a street name and see the possible results on a table 
 This project was done using fiber ( a go framework) and htmx
+To run simple execute
+<br/>
+go mod tidy<br/>
+go mod download<br/>
+go run main.go<br/>
