@@ -48,50 +48,31 @@ func main() {
 }
 
 func LoadData() error {
-	data, err := os.ReadFile("C:\\rodrigo\\ceps.json")
+	data, err := os.ReadFile("ceps.json")
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		return err
 	}
-	var myData []models.Location
+	var locations []models.Location
 
-	err2 := json.Unmarshal(data, &myData)
+	err2 := json.Unmarshal(data, &locations)
 	if err2 != nil {
 		fmt.Println("Error unmarshaling JSON:", err)
 		return err2
 	}
-	startIndex := 100000
-	fmt.Println(len(myData))
-	fmt.Println("Populating array")
-	var locations = []*models.Location{}
-	for i := startIndex; i < 110000; i++ {
-		v := myData[i]
+	batchSize := 100 // You can adjust the batch size as needed
 
-		if !exists(v.Cep) {
-			fmt.Println(i)
-			book := &models.Location{
-				Bairro:         v.Bairro,
-				Cep:            v.Cep,
-				TipoLogradouro: v.TipoLogradouro,
-				Logradouro:     v.Logradouro,
-				Cidade:         v.Cidade,
-				Uf:             v.Uf,
-				CodigoIbge:     v.CodigoIbge,
-			}
-			locations = append(locations, book)
+	for i := 0; i < len(locations); i += batchSize {
+		end := i + batchSize
+		if end > len(locations) {
+			end = len(locations)
 		}
-	}
-	fmt.Println("Running batches")
-	result := database.DB.Db.CreateInBatches(locations, 400)
-	if result.Error != nil {
-		fmt.Println("Error", result.Error)
-		return err2
+
+		// Batch insert data into the database
+		if err := database.DB.Db.Create(locations[i:end]).Error; err != nil {
+			log.Fatal(err)
+		}
 	}
 	fmt.Println("done running batches")
 	return nil
-}
-func exists(cep string) bool {
-	var location models.Location
-	result := database.DB.Db.Where(&models.Location{Cep: cep}).First(&location)
-	return result.Error == nil
 }
