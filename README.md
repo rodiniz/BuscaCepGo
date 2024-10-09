@@ -10,3 +10,5 @@ To run simple execute:
 go mod tidy<br/>
 go mod download<br/>
 go run main.go<br/>
+You can get the json file to generate the database her
+https://www.dropbox.com/scl/fi/ww7vhxn2hgbsi1omq440y/ceps.zip?rlkey=p3ocei1n8rzk0sur909f6bhof&st=3tjy9a8i&dl=0
